@@ -167,63 +167,7 @@ public class DownloadsActivity extends BaseDownloadDialogActivity implements Act
             showNoFlashDialog(info.getDownloadFileName());
         }
 
-        String[] installOpts = getResources().getStringArray(R.array.install_options);
-        final boolean[] selectedOpts = new boolean[installOpts.length];
-        selectedOpts[selectedOpts.length - 1] = true;
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.alert_install_title);
-        builder.setMultiChoiceItems(installOpts, selectedOpts, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                selectedOpts[which] = isChecked;
-            }
-        });
-        builder.setPositiveButton(R.string.install, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(DownloadsActivity.this);
-                builder.setTitle(R.string.alert_install_title);
-                builder.setMessage(R.string.alert_install_message);
-                builder.setPositiveButton(R.string.install, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        flashFiles(new String[] { info.getRecoveryFilePath() }, selectedOpts[0], selectedOpts[2], selectedOpts[1]);
-                    }
-                });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        final AlertDialog dlg = builder.create();
-
-        dlg.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                onDialogShown(dlg);
-            }
-        });
-        dlg.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                onDialogClosed(dlg);
-            }
-        });
-        dlg.show();
+        flashFiles(new String[] { info.getRecoveryFilePath() }, false, false, false);
     }
 
     private void showNoFlashDialog(String file) {
