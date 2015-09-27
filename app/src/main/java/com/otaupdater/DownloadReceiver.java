@@ -75,15 +75,21 @@ public class DownloadReceiver extends BroadcastReceiver {
                 info.addToIntent(flashIntent);
                 PendingIntent flashPIntent = PendingIntent.getActivity(context, 0, flashIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-                Notification notif = new NotificationCompat.Builder(context)
-                        .setTicker(context.getString(info.getDownloadDoneTitle()))
-                        .setContentTitle(context.getString(info.getDownloadDoneTitle()))
-                        .setSmallIcon(R.drawable.ic_stat_av_download)
-                        .setContentText(context.getString(R.string.notif_completed))
-                        .setContentIntent(mainPIntent)
-                        .addAction(R.drawable.ic_action_system_update, context.getString(R.string.install), flashPIntent)
-                        .build();
-                nm.notify(info.getFlashNotifID(), notif);
+//                Notification notif = new NotificationCompat.Builder(context)
+//                        .setTicker(context.getString(info.getDownloadDoneTitle()))
+//                        .setContentTitle(context.getString(info.getDownloadDoneTitle()))
+//                        .setSmallIcon(R.drawable.ic_stat_av_download)
+//                        .setContentText(context.getString(R.string.notif_completed))
+//                        .setContentIntent(mainPIntent)
+//                        .addAction(R.drawable.ic_action_system_update, context.getString(R.string.install), flashPIntent)
+//                        .build();
+//                nm.notify(info.getFlashNotifID(), notif);
+
+                try {
+                    flashPIntent.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
             } else {
                 Intent mainIntent = new Intent(context, OTAUpdaterActivity.class);
                 mainIntent.setAction(info.getNotifAction());

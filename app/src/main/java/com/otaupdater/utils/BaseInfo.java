@@ -125,8 +125,14 @@ public abstract class BaseInfo implements Parcelable, Serializable {
         builder.setPriority(NotificationCompat.PRIORITY_LOW);
         builder.addAction(R.drawable.ic_action_av_download, ctx.getString(R.string.download), dlPIntent);
 
-        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(getNotifID(), builder.build());
+        try {
+            dlPIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
+
+//        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+//        nm.notify(getNotifID(), builder.build());
     }
 
     public void clearUpdateNotif(Context ctx) {
