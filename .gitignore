@@ -8,3 +8,7 @@ build
 .idea/workspace.xml
 .gradle
 local.properties
+.idea/
+app/app.iml
+gradle/wrapper/gradle-wrapper.properties
+ota-updater.iml
