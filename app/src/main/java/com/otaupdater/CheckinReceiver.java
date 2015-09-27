@@ -17,6 +17,7 @@
 package com.otaupdater;
 
 import android.app.AlarmManager;
+import android.app.DownloadManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.util.Log;
 import com.otaupdater.utils.APIUtils;
 import com.otaupdater.utils.BaseInfo;
 import com.otaupdater.utils.Config;
+import com.otaupdater.utils.DownloadStatus;
 import com.otaupdater.utils.KernelInfo;
 import com.otaupdater.utils.PropUtils;
 import com.otaupdater.utils.RomInfo;
@@ -38,6 +40,8 @@ public class CheckinReceiver extends BroadcastReceiver {
     public void onReceive(Context ctx, Intent intent) {
         final Context context = ctx.getApplicationContext();
         final Config cfg = Config.getInstance(context);
+
+        cfg.clearDownloadingRom();
 
         assert context != null;
         assert cfg != null;

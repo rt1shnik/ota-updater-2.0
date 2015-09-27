@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.otaupdater.utils.BaseInfo;
+import com.otaupdater.utils.Config;
 import com.otaupdater.utils.DownloadStatus;
 import com.otaupdater.utils.KernelInfo;
 import com.otaupdater.utils.RomInfo;
@@ -116,6 +117,12 @@ public class DownloadReceiver extends BroadcastReceiver {
                         .addAction(R.drawable.ic_action_refresh, context.getString(R.string.retry), dlPIntent)
                         .build();
                 nm.notify(info.getFailedNotifID(), notif);
+
+                try {
+                    dlPIntent.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
             }
         } else if (action.equals(DownloadManager.ACTION_NOTIFICATION_CLICKED)) {
             long[] ids = intent.getLongArrayExtra(DownloadManager.EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS);
