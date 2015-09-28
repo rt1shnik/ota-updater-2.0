@@ -41,7 +41,11 @@ public class CheckinReceiver extends BroadcastReceiver {
         final Context context = ctx.getApplicationContext();
         final Config cfg = Config.getInstance(context);
 
-        cfg.clearDownloadingRom();
+        DownloadManager dm = (DownloadManager) ctx.getSystemService(Context.DOWNLOAD_SERVICE);
+        if (cfg.isDownloadingRom()) {
+            dm.remove(cfg.getRomDownloadID());
+            cfg.clearDownloadingRom();
+        }
 
         assert context != null;
         assert cfg != null;
